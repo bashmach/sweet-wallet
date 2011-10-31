@@ -30,5 +30,14 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
  
         return $view;
     }
+    
+    public function _initDojo() {
+        $view = $this->getResource('view');
+        $view->addHelperPath('Zend/Dojo/View/Helper/', 'Zend_Dojo_View_Helper');
+        $view->dojo()->requireModule('dijit.form.Form');
+        
+        Zend_Dojo::enableView($view);
+        Zend_Dojo_View_Helper_Dojo::setUseDeclarative();
+    }
 }
 

@@ -1,0 +1,9 @@
+[submodule "public/js/libs/xstyle"]
+	path = public/js/libs/xstyle
+	url = https://github.com/kriszyp/xstyle.git
+[submodule "public/js/libs/put-selector"]
+	path = public/js/libs/put-selector
+	url = https://github.com/kriszyp/put-selector.git
+[submodule "public/js/libs/dgrid"]
+	path = public/js/libs/dgrid
+	url = https://github.com/SitePen/dgrid.git

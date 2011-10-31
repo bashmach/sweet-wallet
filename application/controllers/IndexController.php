@@ -1,20 +1,15 @@
 <?php
 
-class IndexController extends Zend_Controller_Action
-{
+class IndexController extends Zend_Controller_Action {
 
-    public function init()
+    public function init() 
     {
         /* Initialize action controller here */
     }
 
-    public function indexAction()
+    public function indexAction() 
     {
-        // action body
-        $table = new Application_Model_DbTable_User();
-        $table->fetchAll();
+        $this->view->form = new Application_Form_Expense_Add();
     }
-
-
 }
 

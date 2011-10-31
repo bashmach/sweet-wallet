@@ -32,7 +32,7 @@ audio:not([controls]) { display: none; }
 
 html { font-size: 100%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
 
-body { margin: 0; font-size: 13px; line-height: 1.231; }
+body { background: #EAEAEA url(images/bg.jpg); margin: 0; font-size: 13px; line-height: 1.231; }
 
 body, button, input, select, textarea { font-family: sans-serif; color: #222; }
 
@@ -42,8 +42,8 @@ body, button, input, select, textarea { font-family: sans-serif; color: #222; }
  * Also: hot pink! (or customize the background color to match your design)
  */
 
-::-moz-selection { background: #fe57a1; color: #fff; text-shadow: none; }
-::selection { background: #fe57a1; color: #fff; text-shadow: none; }
+::-moz-selection { background: #7BABC9; color: #fff; text-shadow: none; }
+::selection { background: #7BABC9; color: #fff; text-shadow: none; }
 
 
 /* =============================================================================
@@ -136,7 +136,7 @@ form { margin: 0; }
 fieldset { border: 0; margin: 0; padding: 0; }
 
 /* Indicate that 'label' will shift focus to the associated form element */
-label { cursor: pointer; }
+label { cursor: pointer; display: inline-table; vertical-align: middle; }
 
 /* 
  * 1. Correct color not inheriting in IE6/7/8/9 
@@ -289,4 +289,135 @@ td { vertical-align: top; }
   @page { margin: 0.5cm; }
   p, h2, h3 { orphans: 3; widows: 3; }
   h2, h3 { page-break-after: avoid; }
+}
+
+/************************************************************/
+
+html, body {
+    height: 100%;
+}
+
+input:focus, div, span {
+    outline: none;
+}
+
+header {
+    height: 48px;
+}
+
+section#loader {
+	padding:0;
+	margin:0;
+	position:absolute;
+	top:0; left:0;
+	width:100%;
+    height:100%;
+	background:#ededed;
+	z-index:1001;
+	vertical-align:middle;
+}
+section#loader #loaderInner {
+	padding:5px;
+	position:relative;
+	left:0;
+	top:0;
+    background: url('/img/loader.gif') no-repeat center center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 500px;
+    height: 500px;
+    margin-top: -250px; /* Half the height */
+    margin-left: -250px; /* Half the width */
+}
+
+section#container {
+    margin: 0 auto;
+    width: 880px;
+    height: 100%;
+}
+
+#accordion {
+    width: 280px;
+    height: 320px;
+    float: left;
+    margin: 0 1em 0 0;
+}
+
+#main {
+    height: 80%;
+}
+
+.claro p .dijitComboBox .dijitArrowButtonInner {
+    padding: 3px 2px;
+    width: 17px;
+}
+
+.dijitTextBox.expenseAmount {
+    width: 72px;
+}
+
+.dijitComboBox.category {
+    width: 168px;
+    margin: 0 4px 0 0;
+}
+
+.dijitDateTextBox.date {
+    display: none;
+    float: left;
+    width: 110px;
+}
+
+.dijitButton.submit {
+    float: right;
+    margin: 0;
+}
+
+body .dgrid {
+    height: 99%;
+    border: 0;
+}
+
+body .dgrid .column-0 {
+    width: 140px;
+}
+
+body .dgrid .column-1 {
+    width: 80px;
+}
+
+body .dgrid .column-1 .dijitTextBox {
+    width: 60px;
+}
+
+body .dgrid .column-2 {
+    width: 120px;
+}
+body .dgrid .dgrid-header th,
+body .dgrid .column-2 {
+    padding: 6px 3px;
+}
+
+body .dgrid .column-3 {
+    width: 32px;
+}
+
+body .dgrid .column-3 .dijitButton {
+    margin: 0;
+    font-size: 10px;
+    display: none;
+}
+
+body .dgrid .column-3 .dijitButton .dijitButtonNode {
+    padding: 1px 4px 3px;
+}
+
+body .dgrid .dgrid-selected .column-3 .dijitButton,
+body .dgrid .dgrid-row:hover .column-3 .dijitButton {
+    display: block;
+}
+
+body .dgrid .dgrid-cell {
+    border: 0px;
+    outline: none;
 }

@@ -1,0 +1,14 @@
+<?php 
+
+$transactions = array();
+
+foreach ($this->transactions as $transaction) {
+    $transactions[] = array(
+        'id' => $transaction->id,
+        'category' => $transaction->category,
+        'amount' => $transaction->value,
+        'date' => $transaction->date,
+    );
+}
+
+echo Zend_Json::encode($transactions);

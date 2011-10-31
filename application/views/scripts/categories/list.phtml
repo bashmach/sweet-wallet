@@ -1,0 +1,9 @@
+<?php 
+
+$store = array(
+    'identifier' => 'id',
+    'label' => 'name',
+    'items' => $this->categories->toArray()
+);
+
+echo Zend_Json::encode($store);
