@@ -363,15 +363,10 @@ section#container {
 }
 
 .dijitDateTextBox.date {
-    display: none;
-    float: left;
-    width: 110px;
+    width: 168px;
 }
 
-.dijitButton.submit {
-    float: right;
-    margin: 0;
-}
+/****************** dgrid style changes ***********************/
 
 body .dgrid {
     height: 99%;
@@ -420,4 +415,37 @@ body .dgrid .dgrid-row:hover .column-3 .dijitButton {
 body .dgrid .dgrid-cell {
     border: 0px;
     outline: none;
+}
+
+body .dgrid .dgrid-header, 
+body .dgrid .dgrid-header-row, 
+body .dgrid .dgrid-footer {
+    background: #fff;
+}
+
+body .dgrid .dgrid-scroller {
+    overflow-y: auto;
+}
+
+/*****************************************/
+
+.expense-add-form label {
+    font-size: 0.9em;
+    color: #aaa;
+}
+
+.expense-add-form table {
+    margin: 1em 0;
+}
+
+.expense-add-form table thead th {
+    line-height: 1.5em;
+}
+
+.expense-add-form .today {
+    margin: 0 4px;
+}
+
+.expense-add-form .submit .dijitButtonContents:focus {
+    outline: thin dotted;
 }
