@@ -10,6 +10,7 @@ class ExpenseController extends Zend_Controller_Action {
     public function addAction()
     {
         $status = 0;
+        $expense = false;
         $messages = array();
         
         $form = new Application_Form_Expense_Add();
@@ -19,8 +20,14 @@ class ExpenseController extends Zend_Controller_Action {
             if ($this->_request->isXmlHttpRequest()) {
                 if ($form->isValid($this->_request->getPost())) {
                     $model = new Application_Model_Transaction();
-                    $model->add($form->getValues(), Application_Model_Transaction::TYPE_EXPENSE);
+                    
+                    $data = $form->getValues();
+                    $data['userId'] = 1; //FIX ME
+                    
+                    $expense = $model->add($data, Application_Model_Transaction::TYPE_EXPENSE);
 
+                    $expense = $model->find($expense->id)->toStoreValue();
+                    
                     $status = 1;
                 } else {
                     $messages = $form->getMessages();
@@ -39,7 +46,8 @@ class ExpenseController extends Zend_Controller_Action {
         $this->_helper->json(array(
             'status' => $status,
             'message' => $message,
-            'errorMessages' => $messages
+            'errorMessages' => $messages,
+            'data' => $expense
         ));
     }
 }

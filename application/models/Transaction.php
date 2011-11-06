@@ -10,17 +10,20 @@ class Application_Model_Transaction extends Application_Model_Abstract
     public function add($data, $type)
     {
         try {
-            return $this->getTable()->insert(
-                array(
-                    'userId' => 1,
-                    'categoryId' => $data['category'],
-                    'date' => $data['date'],
-                    'value' => ceil($data['amount'] * 1000),
-                    'comment' => '',
-                    'created' => date('Y-m-d H:i:s'),
-                    'type' => $type
-                )
+            $data = array(
+                'userId' => $data['userId'],
+                'categoryId' => $data['category'],
+                'date' => $data['date'],
+                'value' => ceil($data['amount'] * 1000),
+                'comment' => '',
+                'created' => date('Y-m-d H:i:s'),
+                'type' => $type
             );
+            
+            $row = $this->getTable()->createRow($data);
+            $row->save();
+            
+            return $row;
         } catch (Application_Model_Exception $e) {
             throw new Application_Model_Exception($e->getMessage());
         } catch (Exception $e) {
@@ -28,11 +31,10 @@ class Application_Model_Transaction extends Application_Model_Abstract
         }
     }
     
-    public function findAll()
+    private function _getFindSelect()
     {
-        $select = $this->getTable()
+        return $this->getTable()
             ->select()
-            
             ->setIntegrityCheck(false)
             ->from($this->getTable()->info('name'))
             ->columns(
@@ -40,8 +42,21 @@ class Application_Model_Transaction extends Application_Model_Abstract
                     'category' => 'category.name'
                 )
             )
-            ->join('category', 'category.id = categoryId', array())
-            ->order('date DESC');
+            ->join('category', 'category.id = categoryId', array());
+    }
+    
+    public function find($id)
+    {
+        $select = $this->_getFindSelect()
+            ->where('transaction.id = ?', $id);
+        
+        return $this->getTable()->fetchRow($select);
+    }
+    
+    public function findAll()
+    {
+        $select = $this->_getFindSelect()
+            ->order(array('date DESC', 'created DESC'));
         
         return $this->getTable()->fetchAll($select);
     }

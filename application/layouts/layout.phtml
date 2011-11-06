@@ -77,8 +77,8 @@
     </script>
     
     <!-- Dijit Theme -->
-    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.6.1/dojo/resources/dojo.css"> 
-    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.6.1/dijit/themes/claro/claro.css">
+    <?php echo $this->headLink()->prependStylesheet('js/libs/dojo/resources/dojo.css')
+            ->prependStylesheet('js/libs/dijit/themes/claro/claro.css'); ?>
     <!-- end CSS-->
     
     <!-- Grab Google CDN's dojo, with a protocol relative URL; fall back to local if offline -->

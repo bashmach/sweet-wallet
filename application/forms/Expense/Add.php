@@ -45,7 +45,7 @@ class Application_Form_Expense_Add extends Zend_Dojo_Form {
             'amount',
             array(
                 'value' => 0,
-                'label' => 'NumberSpinner',
+                'label' => 'Amount',
                 'smallDelta' => 0.25,
                 'largeDelta' => 3,
                 'defaultTimeout' => 1000,
@@ -88,7 +88,7 @@ class Application_Form_Expense_Add extends Zend_Dojo_Form {
             'category', 
             array(
                 'required' => true,
-                'label' => 'Category',
+                'label' => 'Category name',
                 'autocomplete' => true,
                 'multiOptions' => array(''),
                 'validators' => array(
@@ -103,7 +103,7 @@ class Application_Form_Expense_Add extends Zend_Dojo_Form {
                 ),
                 'attribs' => array(
                     'class' => 'category',
-                    'placeholder' => 'Category'
+                    'placeholder' => 'Select category'
                 )
             )
         );
@@ -129,7 +129,7 @@ class Application_Form_Expense_Add extends Zend_Dojo_Form {
             'date', 
             array(
                 'value' => date('Y-m-d'),
-                'label' => 'DateTextBox',
+                'label' => 'Date',
                 'required' => true,
                 'attribs' => array(
                     'class' => 'date'

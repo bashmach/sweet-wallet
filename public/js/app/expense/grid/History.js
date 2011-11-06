@@ -10,13 +10,26 @@ define(
         "dgrid/Selection", 
         "dgrid/Keyboard", 
         "dojo/store/JsonRest",
+        "dojo/store/Observable",
+        "dojo/store/Memory",
         "dgrid/test/data/base", 
         "dojo/domReady!"
     ],
-    function(require, declare, Grid, Editor, DateTextBox, Button, CurrencyTextBox, Selection, Keyboard, JsonRest) {
+    function(require, declare, Grid, Editor, DateTextBox, Button, CurrencyTextBox, Selection, Keyboard, JsonRest, Observable, Memory) {
         
         var columns = [
-            Editor({label: 'Date', field: 'date'}, DateTextBox),
+            Editor(
+                {
+                    label: 'Date', 
+                    field: 'date',
+                    widgetArgs: function(item) {
+                        return {
+                            value: dojo.date.locale.format(new Date(item.value), {selector: 'date'})
+                        }
+                    }
+                }, 
+                DateTextBox
+            ),
             Editor(
                 {
                     label: 'Amount', 
@@ -57,29 +70,49 @@ define(
         ];
         
         return declare("app.expense.grid.History", [], {
-            startup: function() {                
+            
+            grid: false,
+            
+            store: false,
+            
+            getData: function() {
                 var store;
-                
-                
+                    
                 store = new JsonRest({target: '/transactions/list'});
                 
-                var grid = new (declare([Grid, Selection, Keyboard]))({
-                    store: store,
-                    columns: columns,
-                    selectionMode: "single"
-                }, "grid");
-
-                console.dir(grid);
-                
-
-                grid.on(".field-integer:change", function(event){
-                    if(event.value > 100){
-                        event.preventDefault();
-                        alert("Values above 100 not allowed");
-                    }
-                });
-            }
+                return store.query();
+            },
             
+            init: function() {
+                var store = this.store
+                    , grid = this.grid;
+                
+                dojo.when(this.getData()).then(function(data) {
+                    data.forEach(function(row) {
+                        store.put(row);
+                    });
+
+                    store.query().observe(function(object, removedFrom, insertedInto){
+                        grid.sort('created', true);
+                    });
+
+                    grid = new (declare([Grid, Selection, Keyboard]))({
+                        store: store,
+                        columns: columns,
+                        selectionMode: "single"
+                    }, "grid");
+                    
+                    dojo.subscribe('/expense/add', this, function(row) {
+                        store.put(row);
+                    });
+                });
+            },
+            
+            startup: function() {
+                this.store = Observable(new Memory());
+
+                this.init();
+            }
         });
     }
 );

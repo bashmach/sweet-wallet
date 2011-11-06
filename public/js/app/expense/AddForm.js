@@ -34,13 +34,20 @@ dojo.declare(
                 this.isToday = dijit.byId('isToday');
                 this.submitButton = dijit.byId('submit');
                 
+                this.dateBox.set('disabled', true);
+            
+                this.connect(this.submitButton, 'onClick', this.submit);
+            
                 this.connect(this.isToday, 'onChange', function(value) {
                     if (!value) {
-                        dojo.style(this.isToday.domNode.parentNode, 'display', 'none');
-
-                        dojo.style(this.dateBox.domNode, 'display', 'block');
-
+                        this.dateBox.set('disabled', false);
+                        
                         this.dateBox.openDropDown();
+                    } else {
+                        this.dateBox.set('disabled', true);
+                        this.dateBox.set('value', new Date());
+                        
+                        this.dateBox.closeDropDown();
                     }
                 })
             });
@@ -53,7 +60,7 @@ dojo.declare(
                 datePattern: 'yyyy-MM-dd'
             };
             
-            data['date'] = dojo.date.locale.format(data['date'], options);
+            data['date'] = dojo.date.locale.format(this.dateBox.get('value'), options);
             
             return data;
         },
@@ -75,6 +82,7 @@ dojo.declare(
                 if (1 == response.status) {
                     form.reset();
                     
+                    dojo.publish('/expense/add', [response.data]);
                     dojo.publish('/app/info', [{type: 'message', message: response.message}]);
                 } else {
                     dojo.publish('/app/message', [{type: 'message', message: response.message}]);
@@ -101,10 +109,10 @@ dojo.declare(
                 }, 200);
                 
                 this.isToday.set('checked', 'checked');
-                
-                dojo.style(this.isToday.domNode.parentNode, 'display', 'inline');
 
-                dojo.style(this.dateBox.domNode, 'display', 'none');
+                this.dateBox.set('value', new Date());
+
+                this.dateBox.set('disabled', true);
                 
             }
         }

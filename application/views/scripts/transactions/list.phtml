@@ -3,12 +3,7 @@
 $transactions = array();
 
 foreach ($this->transactions as $transaction) {
-    $transactions[] = array(
-        'id' => $transaction->id,
-        'category' => $transaction->category,
-        'amount' => $transaction->value,
-        'date' => $transaction->date,
-    );
+    $transactions[] = $transaction->toStoreValue();
 }
 
 echo Zend_Json::encode($transactions);
