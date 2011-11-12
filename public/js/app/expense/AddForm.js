@@ -30,10 +30,12 @@ dojo.declare(
             });
             
             this.connect(this, 'startup', function(e) {
+                this.category = dijit.byId('category');
                 this.dateBox = dijit.byId('date');
                 this.isToday = dijit.byId('isToday');
                 this.submitButton = dijit.byId('submit');
                 
+                this.category.set('store', categoriesStore);
                 this.dateBox.set('disabled', true);
             
                 this.connect(this.submitButton, 'onClick', this.submit);
@@ -88,11 +90,11 @@ dojo.declare(
                     dojo.publish('/app/message', [{type: 'message', message: response.message}]);
                     
                     dojo.forEach(form.getChildren(), function(input) {
-                        if (typeof response.messages[input.get('name')] !== 'undefined') {
+                        if (typeof response.errorMessages[input.get('name')] !== 'undefined') {
 
                             input.focus();
                             input.isValid(false);
-                            input.displayMessage(response.messages[input.get('name')]);
+                            input.displayMessage(input.invalidMessage);
                         }
                     });
                 }                    

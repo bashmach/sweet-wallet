@@ -373,7 +373,7 @@ body .dgrid {
     border: 0;
 }
 
-body .dgrid .column-0 {
+body .dgrid .column-2 {
     width: 140px;
 }
 
@@ -385,13 +385,19 @@ body .dgrid .column-1 .dijitTextBox {
     width: 60px;
 }
 
-body .dgrid .column-2 {
+body .dgrid .column-0 {
     width: 120px;
 }
-body .dgrid .dgrid-header th,
-body .dgrid .column-2 {
-    padding: 6px 3px;
+
+body .dgrid .column-0 .dijitTextBox {
+    width: 14em;
 }
+
+body .dgrid .dgrid-header th,
+body .dgrid .dgrid-cell-padding {
+    padding: 4px 3px;
+}
+
 
 body .dgrid .column-3 {
     width: 32px;
@@ -400,7 +406,7 @@ body .dgrid .column-3 {
 body .dgrid .column-3 .dijitButton {
     margin: 0;
     font-size: 10px;
-    display: none;
+    visibility: hidden;
 }
 
 body .dgrid .column-3 .dijitButton .dijitButtonNode {
@@ -409,7 +415,7 @@ body .dgrid .column-3 .dijitButton .dijitButtonNode {
 
 body .dgrid .dgrid-selected .column-3 .dijitButton,
 body .dgrid .dgrid-row:hover .column-3 .dijitButton {
-    display: block;
+    visibility: visible;
 }
 
 body .dgrid .dgrid-cell {
@@ -425,6 +431,10 @@ body .dgrid .dgrid-footer {
 
 body .dgrid .dgrid-scroller {
     overflow-y: auto;
+}
+
+.dgrid-row-odd {
+    background: #efefef;
 }
 
 /*****************************************/

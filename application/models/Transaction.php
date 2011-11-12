@@ -10,17 +10,33 @@ class Application_Model_Transaction extends Application_Model_Abstract
     public function add($data, $type)
     {
         try {
-            $data = array(
-                'userId' => $data['userId'],
-                'categoryId' => $data['category'],
-                'date' => $data['date'],
-                'value' => ceil($data['amount'] * 1000),
-                'comment' => '',
-                'created' => date('Y-m-d H:i:s'),
-                'type' => $type
-            );
+            $row = $this->getTable()->createRow(array());
+            $row->userId = $data['userId'];
+            $row->categoryId = $data['category'];
+            $row->date = $data['date'];
+            $row->value = $data['amount'];
+            $row->created = date('Y-m-d H:i:s');
+            $row->comment = '';
             
-            $row = $this->getTable()->createRow($data);
+            $row->save();
+            
+            return $row;
+        } catch (Application_Model_Exception $e) {
+            throw new Application_Model_Exception($e->getMessage());
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+    
+    public function edit($data)
+    {
+        try {
+            $row = $this->getTable()->find($data['identifier'])->current();
+            
+            $row->categoryId = $data['category'];
+            $row->date = $data['date'];
+            $row->value = $data['amount'];
+            
             $row->save();
             
             return $row;

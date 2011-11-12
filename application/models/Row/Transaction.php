@@ -6,6 +6,12 @@ class Application_Model_Row_Transaction extends Zend_Db_Table_Row
     
     public function __set($key, $value)
     {   
+        switch ($key) {
+            case 'value':
+                $value = ceil($value * 1000);
+                break;
+        }
+        
         return parent::__set($key, $value);
     }
     
@@ -27,10 +33,11 @@ class Application_Model_Row_Transaction extends Zend_Db_Table_Row
     {
         return array(
             'id' => $this->id,
-            'category' => $this->category,
+            'categoryId' => $this->categoryId,
             'amount' => $this->value,
             'date' => $this->date,
-            'created' => $this->date . ' ' . substr($this->created, 11, 8)
+            'created' => $this->created,
+            'bool' => false
         );
     }
 }

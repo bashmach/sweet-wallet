@@ -10,12 +10,16 @@ dojo.declare(
                 content: data,
                 handleAs: "json",
                 load: function() {
-                    button.set('disabled', false);
+                    if (typeof button != 'undefined') {
+                        button.set('disabled', false);
+                    }
                 },
                 error: function() {
                     dojo.publish('/app/info', [{type: 'error', message: 'Sorry! Please try again.'}]);
                     
-                    button.set('disabled', false);
+                    if (typeof button != 'undefined') {
+                        button.set('disabled', false);
+                    }
                 }
             }
             

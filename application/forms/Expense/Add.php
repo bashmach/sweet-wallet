@@ -1,25 +1,14 @@
 <?php
 
-class Application_Form_Expense_Add extends Zend_Dojo_Form {
-
-    /**
-     * Options to use with select elements
-     */
-    public $_selectOptions = array(
-        'red' => 'Rouge',
-        'blue' => 'Bleu',
-        'white' => 'Blanc',
-        'orange' => 'Orange',
-        'black' => 'Noir',
-        'green' => 'Vert',
-    );
-
+class Application_Form_Expense_Add extends Zend_Dojo_Form
+{
     /**
      * Form initialization
      *
      * @return void
      */
-    public function init() {
+    public function init()
+    {
         Zend_Dojo::enableForm($this);
 
         $this->setMethod('post');
@@ -27,7 +16,7 @@ class Application_Form_Expense_Add extends Zend_Dojo_Form {
         $this->setAttribs(array(
             'name' => 'addForm',
         ));
-        
+
         $this->addElements(
             array(
                 $this->_amountElement(),
@@ -38,7 +27,7 @@ class Application_Form_Expense_Add extends Zend_Dojo_Form {
             )
         );
     }
-    
+
     public function _amountElement()
     {
         $amount = new Zend_Dojo_Form_Element_NumberSpinner(
@@ -59,10 +48,10 @@ class Application_Form_Expense_Add extends Zend_Dojo_Form {
                 )
             )
         );
-        
+
         $amount->removeDecorator('HtmlTag');
         $amount->removeDecorator('Label');
-        
+
         return $amount;
     }
 
@@ -75,27 +64,28 @@ class Application_Form_Expense_Add extends Zend_Dojo_Form {
                 'checked' => true,
             )
         );
-        
+
         $checkbox->removeDecorator('HtmlTag');
         $checkbox->removeDecorator('Label');
-                
-        return $checkbox; 
+
+        return $checkbox;
     }
-    
+
     public function _categorySelect()
     {
         $category = new Zend_Dojo_Form_Element_FilteringSelect(
-            'category', 
+            'category',
             array(
                 'required' => true,
                 'label' => 'Category name',
+                'registerInArrayValidator' => false,
                 'autocomplete' => true,
                 'multiOptions' => array(''),
                 'validators' => array(
                     array(
                         'Db_RecordExists',
                         false,
-                         array(
+                        array(
                             'table' => 'category',
                             'field' => 'id'
                         )
@@ -107,26 +97,17 @@ class Application_Form_Expense_Add extends Zend_Dojo_Form {
                 )
             )
         );
-        
-        $category->setStoreId('categoriesStore')
-            ->setStoreType('dojo.data.ItemFileReadStore')
-            ->setStoreParams(
-                array(
-                    'url' => '/categories/list'
-                )
-            )
-            ->setAttrib('searchAttr', 'name');
-        
+
         $category->removeDecorator('HtmlTag');
         $category->removeDecorator('Label');
-        
+
         return $category;
     }
-    
+
     public function _dateElement()
     {
         $date = new Zend_Dojo_Form_Element_DateTextBox(
-            'date', 
+            'date',
             array(
                 'value' => date('Y-m-d'),
                 'label' => 'Date',
@@ -136,17 +117,17 @@ class Application_Form_Expense_Add extends Zend_Dojo_Form {
                 )
             )
         );
-        
+
         $date->removeDecorator('HtmlTag');
         $date->removeDecorator('Label');
-        
+
         return $date;
     }
-    
+
     public function _submitButton()
     {
-        $button = new Zend_Dojo_Form_Element_SubmitButton( 
-            'submit', 
+        $button = new Zend_Dojo_Form_Element_SubmitButton(
+            'submit',
             array(
                 'label' => 'Submit expense',
                 'type' => 'submit',
@@ -155,11 +136,12 @@ class Application_Form_Expense_Add extends Zend_Dojo_Form {
                 )
             )
         );
-        
+
         $button->removeDecorator('HtmlTag');
         $button->removeDecorator('DtDdWrapper');
         $button->removeDecorator('Label');
-        
+
         return $button;
     }
+
 }
