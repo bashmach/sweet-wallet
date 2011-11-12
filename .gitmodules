@@ -7,3 +7,15 @@
 [submodule "public/js/libs/dgrid"]
 	path = public/js/libs/dgrid
 	url = https://github.com/SitePen/dgrid.git
+[submodule "public/js/libs/dojo"]
+	path = public/js/libs/dojo
+	url = https://github.com/dojo/dojo.git
+[submodule "public/js/libs/dojox"]
+	path = public/js/libs/dojox
+	url = https://github.com/dojo/dojox.git
+[submodule "public/js/libs/dijit"]
+	path = public/js/libs/dijit
+	url = https://github.com/dojo/dijit.git
+[submodule "public/js/libs/util"]
+	path = public/js/libs/util
+	url = https://github.com/dojo/util.git
