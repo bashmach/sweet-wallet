@@ -19,3 +19,6 @@
 [submodule "public/js/libs/util"]
 	path = public/js/libs/util
 	url = https://github.com/dojo/util.git
+[submodule "public/js/app/form/CurrencySpinner"]
+	path = public/js/app/form/CurrencySpinner
+	url = git@github.com:bashmach/CurrencySpinner.git
