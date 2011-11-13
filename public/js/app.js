@@ -3,22 +3,21 @@
 */
 
 (function() {
-    dojo.require('dojo.data.ItemFileReadStore');
-    dojo.require('dojo.store.Memory');
+    dojo.require('dojo/store/Memory');
     dojo.require("dojo/store/Observable");
     dojo.require("dojo/store/JsonRest");
     dojo.require('dojo/parser');
     
-    dojo.require('dijit.layout.AccordionContainer');
-    dojo.require('dijit.layout.BorderContainer');
-    dojo.require('dijit.layout.TabContainer');
-    dojo.require('dijit.layout.ContentPane');
+    dojo.require('dijit/layout/AccordionContainer');
+    dojo.require('dijit/layout/BorderContainer');
+    dojo.require('dijit/layout/TabContainer');
+    dojo.require('dijit/layout/ContentPane');
     
-    dojo.require('dojox.widget.Toaster');
+    dojo.require('dojox/widget/Toaster');
 
-    dojo.require('app.expense.AddForm');
-    dojo.require('app.expense.grid.History');
-    dojo.require('app.Request');
+    dojo.require('app/expense/AddForm');
+    dojo.require('app/expense/grid/History');
+    dojo.require('app/Request');
 
     /**
      * @todo Refactor me

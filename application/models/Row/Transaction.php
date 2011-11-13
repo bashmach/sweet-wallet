@@ -35,6 +35,7 @@ class Application_Model_Row_Transaction extends Zend_Db_Table_Row
             'id' => $this->id,
             'categoryId' => $this->categoryId,
             'amount' => $this->value,
+            'comment' => $this->comment,
             'date' => $this->date,
             'created' => $this->created,
             'bool' => false

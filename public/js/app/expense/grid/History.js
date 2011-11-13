@@ -6,7 +6,8 @@ define(
         "dgrid/Editor", 
         "dijit/form/FilteringSelect", 
         "dijit/form/DateTextBox", 
-        "dijit/form/Button", 
+        "dijit/form/Button",
+        "dijit/form/Textarea",
         "app/form/CurrencySpinner/CurrencySpinner", 
         "dgrid/Selection", 
         "dgrid/Keyboard", 
@@ -19,7 +20,7 @@ define(
         "dojo/NodeList-traverse",
         "dojo/domReady!"
     ],
-    function(require, declare, Grid, Editor, FilteringSelect, DateTextBox, Button, CurrencySpinner, Selection, Keyboard, JsonRest, Observable, Memory, Request, on) {
+    function(require, declare, Grid, Editor, FilteringSelect, DateTextBox, Button, Textarea, CurrencySpinner, Selection, Keyboard, JsonRest, Observable, Memory, Request, on) {
         
         //fix me
         /*var*/ grid = false;
@@ -103,6 +104,7 @@ define(
                     'identifier' : item.id,
                     'date': item.date,
                     'amount': item.amount,
+                    'comment': item.comment,
                     'category': item.categoryId
                 }
                 
@@ -207,8 +209,25 @@ define(
                     ),
                     Editor(
                         {
+                            label: 'Comment'
+                            , field: 'comment'
+                            , canEdit: function(object) {
+                                return object.bool;
+                            }
+                            , formatter: function(value) {
+                                return value;
+                            }
+                            , widgetArgs: {
+                                placeholder: 'Comment text (max 1000 characters)'
+                            }
+                        }, 
+                        Textarea
+                    ),
+                    Editor(
+                        {
                             label: ' '
                             , field: 'bool'
+                            , sortable : false
                             , widgetArgs: function(item){
                                 return {
                                     label: 'Edit',

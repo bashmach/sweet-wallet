@@ -36,6 +36,7 @@ class Application_Model_Transaction extends Application_Model_Abstract
             $row->categoryId = $data['category'];
             $row->date = $data['date'];
             $row->value = $data['amount'];
+            $row->comment = $data['comment'];
             
             $row->save();
             
