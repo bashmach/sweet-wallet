@@ -17,6 +17,7 @@
 
     dojo.require('app/expense/AddForm');
     dojo.require('app/expense/grid/History');
+    dojo.require('app/expense/grid/EditColumn');
     dojo.require('app/Request');
 
     /**

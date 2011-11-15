@@ -5,26 +5,25 @@ define(
         "dgrid/OnDemandGrid",
         "dgrid/Editor", 
         "dijit/form/FilteringSelect", 
-        "dijit/form/DateTextBox", 
-        "dijit/form/Button",
+        "dijit/form/DateTextBox",
         "dijit/form/Textarea",
         "app/form/CurrencySpinner/CurrencySpinner", 
+//        "dijit/form/Button",
+        "app/expense/grid/EditColumn",
         "dgrid/Selection", 
         "dgrid/Keyboard", 
         "dojo/store/JsonRest",
         "dojo/store/Observable",
         "dojo/store/Memory",
-        "app/Request",
         "dojo/on",
         "dgrid/test/data/base",
         "dojo/NodeList-traverse",
         "dojo/domReady!"
     ],
-    function(require, declare, Grid, Editor, FilteringSelect, DateTextBox, Button, Textarea, CurrencySpinner, Selection, Keyboard, JsonRest, Observable, Memory, Request, on) {
+    function(require, declare, Grid, Editor, FilteringSelect, DateTextBox, Textarea, CurrencySpinner, EditColumn, Selection, Keyboard, JsonRest, Observable, Memory, on) {
         
-        //fix me
-        /*var*/ grid = false;
-        
+        grid = false;
+
         var _refresh = function() {
             var attribute = 'date'
                 , descending = true;
@@ -39,116 +38,6 @@ define(
             grid.sort(attribute, descending);
         }
         
-        var Cell = function(item, gridCell) {
-                
-            this.fieldName = gridCell.column.field;
-            this.column = gridCell.column;
-            this.value = item[this.fieldName];
-            this.displayValue = this.value;
-            this.renderNeeded = (this.fieldName != 'bool');
-
-            this.getData = function() {
-                return {
-                    name: this.fieldName,
-                    column: this.column,
-                    value: this.value,
-                    displayValue: this.displayValue,
-                    element: gridCell.element,
-                    render: this.renderNeeded
-                }
-            }
-
-            if (this.renderNeeded) {
-                this.column.editOn = (item.bool) ? false : "dblclick";
-            }
-
-            if (!item.bool && dojo.isFunction(this.column.formatter)) {
-                
-                this.displayValue = this.column.formatter(this.value);
-                
-                if (this.value instanceof Date) {
-                    item[this.fieldName] = dojo.date.locale.format(
-                        this.value, {
-                            selector: 'date', 
-                            datePattern: "yyyy-MM-dd"
-                        }
-                    );
-                }
-            } else {
-                this.displayValue = this.value;
-            }
-        }
-        
-        var _updateCells = function(item, currentCells) {
-            var dfrd = new dojo.Deferred()
-                , newCells = []
-                , data = {}
-                , request = new Request();
-            
-            dojo.forEach(currentCells, function(cell) {
-                cell = new Cell(item, grid.cell(cell));
-
-                newCells.push(cell.getData());
-            });
-            
-            dojo.forEach(newCells, function(cell) {
-                if (cell.render == true) {
-                    dojo.empty(cell.element);
-
-                    cell.column.renderCell(item, cell.displayValue, cell.element);
-                }
-            });
-
-            if (!item.bool) {
-                data = {
-                    'identifier' : item.id,
-                    'date': item.date,
-                    'amount': item.amount,
-                    'comment': item.comment,
-                    'category': item.categoryId
-                }
-                
-                dojo.when(request.post('/expense/edit', data))
-                .then(
-                    function(response) {
-                        if (1 == response.status) {
-                            dojo.publish('/app/info', [{type: 'message', message: response.message}]);
-                            
-                            _refresh();
-                        } else {
-                            dojo.publish('/app/message', [{type: 'message', message: response.message}]);
-                        }
-
-                        dfrd.resolve(response.status);
-                    }, function() {
-                        dfrd.resolve(true);
-                    }
-                );
-                
-            } else {
-                dfrd.resolve(true);
-            }
-
-            return dfrd.promise;
-        }
-        
-        var _editRow = function(item, cell, button) {
-            button.set('disabled', true);
-            
-            button.set('value', !button.get('value'));
-
-            item.bool = button.get('value');
-
-            dojo.when(_updateCells(item, dojo.query('.dgrid-cell', cell.row.element)))
-                .then(function(status) {
-                    if (status) {
-                        button.set('label', (button.get('value') ? 'Save' : 'Edit'));
-                    }
-                    
-                    button.set('disabled', false);
-                });
-        }
-        
         return declare("app.expense.grid.History", [], {
             
             store: false,
@@ -159,9 +48,7 @@ define(
                         {
                             label: 'Category'
                             , field: 'categoryId' 
-                            , canEdit: function(object) {
-                                return object.bool;
-                            }
+//                            , autoSave : true
                             , widgetArgs: {
                                 store: categoriesStore
                             }
@@ -176,9 +63,7 @@ define(
                         {
                             label: 'Amount'
                             , field: 'amount'
-                            , canEdit: function(object) {
-                                return object.bool;
-                            }
+//                            , autoSave : true
                             , widgetArgs: function() {
                                 return dojo.mixin({
                                     currency: options.currency,
@@ -198,9 +83,7 @@ define(
                         {
                             label: 'Date'
                             , field: 'date'
-                            , canEdit: function(object) {
-                                return object.bool;
-                            }
+//                            , autoSave : true
                             , formatter: function(value) {
                                 return dojo.date.locale.format(new Date(value), {selector: 'date', formatLength: "long"});
                             }
@@ -211,33 +94,29 @@ define(
                         {
                             label: 'Comment'
                             , field: 'comment'
-                            , canEdit: function(object) {
-                                return object.bool;
-                            }
-                            , formatter: function(value) {
-                                return value;
+                            , renderCell: function(object, data, td, options){
+                                var div = document.createElement("div");
+                                div.className = "dojoxEllipsis";
+                                div.innerHTML = '<span>' + data + '</span>';
+                                
+                                td.appendChild(div);
+                                
+                                return div;
                             }
                             , widgetArgs: {
                                 placeholder: 'Comment text (max 1000 characters)'
                             }
                         }, 
                         Textarea
+                        , "dblclick"
                     ),
                     Editor(
                         {
                             label: ' '
-                            , field: 'bool'
+                            , field: 'id'
                             , sortable : false
-                            , widgetArgs: function(item){
-                                return {
-                                    label: 'Edit',
-                                    onClick: function(evt) {
-                                        _editRow(item, grid.cell(evt), this);
-                                    }
-                                };
-                            }
                         }
-                        , Button
+                        , EditColumn
                     )
                 ];
             },
@@ -271,6 +150,10 @@ define(
                 
                     dojo.subscribe('/expense/add', this, function(row) {
                         store.put(row);
+                    });
+                    
+                    dojo.subscribe('/expense/edit', this, function(row) {
+                        _refresh();
                     });
                 });
             },

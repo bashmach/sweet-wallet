@@ -10,6 +10,9 @@
  * ==|== normalize ==========================================================
  */
 
+@import "dojox/Toaster/Toaster.css";
+@import "dojox/ellipsis.css";
+
 
 /* =============================================================================
    HTML5 display definitions
@@ -298,7 +301,7 @@ html, body {
 }
 
 input:focus, div, span {
-    outline: none;
+    /*outline: thin dotted;*/
 }
 
 header {
@@ -368,9 +371,10 @@ section#container {
 
 /****************** dgrid style changes ***********************/
 
-body .dgrid {
+body.claro .dgrid {
     height: 99%;
     border: 0;
+    border: none;
 }
 
 .dgrid .dgrid-header th,
@@ -380,20 +384,26 @@ body .dgrid {
 }
 
 .dgrid .dgrid-cell {
-    border: 0px;
+    border: none;
     outline: none;
     line-height: 26px;
-    
+}
+
+.dgrid .dgrid-header .dgrid-cell {
+    line-height: 20px;
+    height: 24px;
+    padding-top: 3px;
 }
 
 body .dgrid .dgrid-cell .dijit {
     line-height: 12px;
-    margin: 2px 3px 4px;
+    margin: 2px 3px 4px 0px;
 }
 
-body .dgrid .dgrid-header, 
-body .dgrid .dgrid-header-row, 
-body .dgrid .dgrid-footer {
+body .dgrid .dgrid-header,
+body.claro .dgrid .dgrid-header .dgrid-cell,
+body .dgrid .dgrid-footer,
+body .dgrid .dgrid-header-scroll{
     background: #fff;
 }
 
@@ -422,7 +432,7 @@ body .dgrid .dgrid-scroller {
 }
 
 .dgrid .column-1 .dijitTextBox {
-    width: 80px;
+    width: 84px;
 }
 
 .dgrid .column-2 {
@@ -430,19 +440,24 @@ body .dgrid .dgrid-scroller {
 }
 
 .dgrid .column-2 .dijitTextBox {
-    width: 140px;
+    width: 146px;
 }
 
 .dgrid .column-3 {
-    width: 240px;
+    width: 220px;
 }
 
 .dgrid .column-3 .dijitTextArea {
-    width: 230px;
+    width: 210px;
 }
 
 .dgrid .column-4 {
-    width: 80px;
+    width: 100px;
+    text-align: right;
+}
+
+.dgrid .column-4 .edit {
+    
 }
 
 .dgrid .column-4 .dijitButton {
@@ -477,8 +492,4 @@ body .dgrid .dgrid-scroller {
 
 .expense-add-form .today {
     margin: 0 4px;
-}
-
-.expense-add-form .submit .dijitButtonContents:focus {
-    outline: thin dotted;
 }
