@@ -297,15 +297,12 @@ td { vertical-align: top; }
 /************************************************************/
 
 html, body {
+    color: #22242C;
     height: 100%;
 }
 
 input:focus, div, span {
     /*outline: thin dotted;*/
-}
-
-header {
-    height: 48px;
 }
 
 section#loader {
@@ -334,15 +331,44 @@ section#loader #loaderInner {
     margin-left: -250px; /* Half the width */
 }
 
-section#container {
+header {
+    background: #304E69 url('images/gradient-dark-nav.png') repeat-x scroll bottom left;
+    height: 3em;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    overflow: none;
+}
+
+body.claro header.dijitContentPane {
+    padding: 0;
+}
+
+#logo {
+    font-size: 2em;
+    line-height: 1.5em;
+    font-family: 'Marck Script', cursive;
     margin: 0 auto;
+    width: 1080px;
+}
+
+#logo a {
+    color: #fff;
+}
+
+#logo a, a:hover {
+    text-decoration: none;
+}
+
+section#container {
+    margin: 4em auto 0;
     width: 1080px;
     height: 100%;
 }
 
 #accordion {
     width: 280px;
-    height: 320px;
     float: left;
     margin: 0 1em 0 0;
 }
@@ -357,7 +383,7 @@ section#container {
 }
 
 .dijitTextBox.expenseAmount {
-    width: 72px;
+    width: 76px;
 }
 
 .dijitComboBox.category {
@@ -400,8 +426,7 @@ body .dgrid .dgrid-cell .dijit {
     margin: 2px 3px 4px 0px;
 }
 
-body .dgrid .dgrid-header,
-body.claro .dgrid .dgrid-header .dgrid-cell,
+body .dgrid .dgrid-header dgrid-header-scroll,
 body .dgrid .dgrid-footer,
 body .dgrid .dgrid-header-scroll{
     background: #fff;
@@ -419,28 +444,28 @@ body .dgrid .dgrid-scroller {
 
 .dgrid th.column-0,
 .dgrid .column-0 {
-    width: 170px;
+    width: 150px;
     padding: 0px 0px 0px 6px;
 }
 
 .dgrid .column-0 .dijitTextBox {
-    width: 160px;
+    width: 140px;
 }
 
 .dgrid .column-1 {
-    width: 90px;
+    width: 170px;
 }
 
 .dgrid .column-1 .dijitTextBox {
-    width: 84px;
+    width: 160px;
 }
 
 .dgrid .column-2 {
-    width: 150px;
+    width: 90px;
 }
 
 .dgrid .column-2 .dijitTextBox {
-    width: 146px;
+    width: 84px;
 }
 
 .dgrid .column-3 {
@@ -449,6 +474,7 @@ body .dgrid .dgrid-scroller {
 
 .dgrid .column-3 .dijitTextArea {
     width: 210px;
+    margin: 3px 0;
 }
 
 .dgrid .column-4 {
@@ -479,11 +505,10 @@ body .dgrid .dgrid-scroller {
 
 .expense-add-form label {
     font-size: 0.9em;
-    color: #aaa;
 }
 
 .expense-add-form table {
-    margin: 1em 0;
+    margin: 0 0 0.8em 0;
 }
 
 .expense-add-form table thead th {
@@ -492,4 +517,9 @@ body .dgrid .dgrid-scroller {
 
 .expense-add-form .today {
     margin: 0 4px;
+}
+
+.expense-add-form .buttons {
+    text-align: right;
+    margin: 0.5em 0;
 }
