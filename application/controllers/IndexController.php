@@ -9,6 +9,15 @@ class IndexController extends Zend_Controller_Action {
 
     public function indexAction() 
     {
+        $this->categoryModel = new Application_Model_Category();
+        $this->view->categories = $this->categoryModel->findAll(
+            array(
+                'id',
+                'name',
+                'created'
+            )
+        );
+        
         $this->view->form = new Application_Form_Expense_Add();
     }
 }

@@ -60,7 +60,7 @@
     <script type="text/javascript">
         var djConfig = {
             parseOnLoad: true,
-            async: false,
+            async: true,
             isDebug: true,
 //            baseUrl: '/', 
             paths: {
@@ -86,10 +86,20 @@
 <!--    <script src="//ajax.googleapis.com/ajax/libs/dojo/1.6.1/dojo/dojo.xd.js"></script>-->
     <script>window.dojo || document.write('<script src="js/libs/dojo/dojo.js"><\/script>')</script>
         
+    <script type="text/javascript">
+        var application = false;
+        
+        require(["dojo", "app/App", "dojo/domReady!"], function(dojo, app) {
+            application = new app({
+                categoriesList: <?php echo ($this->categories) ? Zend_Json::encode($this->categories->toArray()) : '[]'; ?> ,
+                user: <?php echo (($this->user) ? $this->user : 'false') ?>
+            });
+        });
+    
+    </script>
         
     <!-- scripts concatenated and minified via ant build script-->
     <script defer src="js/plugins.js"></script>
-    <script defer src="js/app.js"></script>
     <!-- end scripts-->
         
     <?php echo $this->headLink()->appendStylesheet($this->baseUrl('js/libs/dgrid/css/dgrid.css'))
