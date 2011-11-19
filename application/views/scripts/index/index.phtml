@@ -1,51 +1,5 @@
 <section id="accordion" data-dojo-type="dijit.layout.AccordionContainer">
-    <div class="expense-add-form" data-dojo-type="app.expense.AddForm" data-dojo-props="region: 'center', title: 'Add expense'">
-        <table>
-            <thead>
-                <th width="60%">
-                    <label><?php echo $this->form->getElement('category')->getLabel() ?></label>
-                </th>
-                <th>
-                    <label><?php echo $this->form->getElement('amount')->getLabel() ?></label>
-                </th>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <?php echo $this->form->getElement('category') ?>
-                    </td>
-                    <td>
-                        <?php echo $this->form->getElement('amount') ?>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-        <table>
-            <thead>
-                <th width="60%">
-                        <label><?php echo $this->form->getElement('date')->getLabel() ?></label>
-                </th>
-                <th></th>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <?php echo $this->form->getElement('date') ?>
-                    </td>
-                    <td>
-                        <span class="today">
-                        <?php echo $this->form->getElement('isToday') ?>
-                        <label for="<?php echo $this->form->getElement('isToday')->getId()?>" class="optional">Today</label>
-                        </span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <p>
-            <?php echo $this->form->getElement('submit') ?>
-        </p>
-    </div>
+    <div data-dojo-type="app.expense.AddForm" data-dojo-props="region: 'center', title: 'New expense'"></div>
     <div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: 'Settings'">
         <h1>Settings</h1>
     </div>
@@ -58,5 +12,3 @@
         <div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="refreshOnShow: 'true', href: '/statistics', title: 'Statistics'" class="tab"></div>
     </div>
 </section>
-
-<div data-dojo-type="dojo.store.Memory" data-dojo-props="jsId: 'categories'" />
