@@ -1,0 +1,63 @@
+<div data-dojo-attach-point='containerNode' data-dojo-attach-event='onreset:_onReset,onsubmit:_onSubmit' class="expense-add-form" ${!nameAttrSetting}>
+<form data-dojo-type="dijit.form.Form" data-dojo-attach-point="form">
+    <table>
+        <thead>
+            <th width="60%">
+                <label>Category</label>
+            </th>
+            <th>
+                <label>Amount</label>
+            </th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div data-dojo-type="dijit.form.FilteringSelect" data-dojo-attach-point="category" data-dojo-props="name: 'category', placeholder: 'Select category', store: categoriesStore" class="category"></div>
+                </td>
+                <td>
+                    <div data-dojo-type="app.form.CurrencySpinner.CurrencySpinner" data-dojo-props="name: 'amount', smallDelta: 0.25, largeDelta: 3, defaultTimeout: 1000, timeoutChangeRate: 100, places: 0, maxLength: 20, constraints: {min: 0, max: 1000}, currency: 'USD', value: 0" class="expenseAmount" placeholder="Amount"></div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table>
+        <thead>
+            <th colspan="2">
+                <label>Comment</label>
+            </th>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="2">
+                    <div data-dojo-type="app.form.ValidationTextarea" data-dojo-props="name: 'comment', placeholder: 'Comment text (max 1000 characters)', cols: 33" class="comment dijitExpandingTextArea"></div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table>
+        <thead>
+            <th width="60%">
+                <label>Transaction Date</label>
+            </th>
+            <th></th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div data-dojo-type="dijit.form.DateTextBox" data-dojo-attach-point="dateBox" data-dojo-props="name: 'date', value: new Date(), disabled: true, required: true" class="date"></div>
+                </td>
+                <td>
+                    <span class="today">
+                    <input type="checkbox" data-dojo-type="dijit.form.CheckBox" data-dojo-attach-point="selectToday" checked="checked" id="selectToday" />
+                    <label for="selectToday" class="optional">Today</label>
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p class="buttons">
+        <button type="reset" data-dojo-type="dijit.form.Button">Reset</button>
+        <button type="submit" data-dojo-type="dijit.form.Button" data-dojo-attach-point="submitButton">Add</button>
+    </p>
+</form>
+</div>
