@@ -1,10 +1,11 @@
-dojo.provide("app.form.ValidationTextarea");
-
-dojo.require("dijit.form.ValidationTextBox");
-dojo.require("dijit.form.Textarea");
-
-dojo.declare("app.form.ValidationTextarea", [dijit.form.ValidationTextBox, dijit.form.Textarea], {
-    baseClass: 'appValidationTextarea dijitTextBox dijitValidationTextBox dijitTextArea'
-    
-//    , invalidMessage: 'The value entered is not valid.'
-}); 
+define(
+[
+    "dojo/_base/declare",
+    "dijit/form/ValidationTextBox", 
+    "dijit/form/Textarea"
+],
+function(declare, ValidationTextBox, Textarea) {
+    return declare("app.form.ValidationTextarea", [ValidationTextBox, Textarea], {
+        baseClass: 'appValidationTextarea dijitTextBox dijitValidationTextBox dijitTextArea'
+    });
+});

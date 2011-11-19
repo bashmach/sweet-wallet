@@ -1,9 +1,9 @@
-dojo.provide('app.Request');
-
-dojo.declare(
-    'app.Request', 
-    null, 
-    {
+define(
+[
+    "dojo/_base/declare",
+],
+function(declare) {
+    return declare("app.Request", null, {
         post: function(url, data, button) {
             var xhrArgs = {
                 url: url,
@@ -25,5 +25,6 @@ dojo.declare(
             
             return dojo.xhrPost(xhrArgs);
         }
-    }
-);
+                
+    });
+});
