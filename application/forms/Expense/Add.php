@@ -23,6 +23,8 @@ class Application_Form_Expense_Add extends Zend_Dojo_Form
                 $this->_categorySelect(),
                 $this->_dateElement(),
                 $this->_isTodayElement(),
+                $this->_commentElement(),
+                $this->_resetButton(),
                 $this->_submitButton()
             )
         );
@@ -110,7 +112,7 @@ class Application_Form_Expense_Add extends Zend_Dojo_Form
             'date',
             array(
                 'value' => date('Y-m-d'),
-                'label' => 'Date',
+                'label' => 'Transaction Date',
                 'required' => true,
                 'attribs' => array(
                     'class' => 'date'
@@ -124,12 +126,62 @@ class Application_Form_Expense_Add extends Zend_Dojo_Form
         return $date;
     }
 
+    public function _commentElement()
+    {
+        $element = new Zend_Dojo_Form_Element_Textarea('comment',
+            array(
+                'label' => 'Comment',
+                'required' => false,
+                'cols' => 33,
+                'rows' => 2,
+                'attribs' => array(
+                    'class' => 'category',
+                    'data-dojo-props' => 'placeholder: "Comment text (max 1000 characters)"',
+                    'value' => ''
+                )
+            )
+        );
+        
+        $element->addValidator(new Zend_Validate_Alnum(true));
+        
+        $validator = new Zend_Validate_StringLength(0, 1000);
+        $validator->setMessage(
+            "Lengths of description is more than %max% characters long", 
+            Zend_Validate_StringLength::TOO_LONG
+        );
+        $element->addValidator($validator);
+        
+        $element->removeDecorator('Label');
+        
+        return $element;
+    }
+    
+    public function _resetButton()
+    {
+        $button = new Zend_Dojo_Form_Element_Button(
+            'reset',
+            array(
+                'label' => 'Reset',
+                'type' => 'reset',
+                'attribs' => array(
+                    'class' => 'submit'
+                )
+            )
+        );
+
+        $button->removeDecorator('HtmlTag');
+        $button->removeDecorator('DtDdWrapper');
+        $button->removeDecorator('Label');
+
+        return $button;
+    }
+    
     public function _submitButton()
     {
         $button = new Zend_Dojo_Form_Element_SubmitButton(
             'submit',
             array(
-                'label' => 'Submit expense',
+                'label' => 'Submit',
                 'type' => 'submit',
                 'attribs' => array(
                     'class' => 'submit'

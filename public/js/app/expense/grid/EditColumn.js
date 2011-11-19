@@ -4,9 +4,10 @@ define([
         "dijit/_WidgetsInTemplateMixin",
         "app/Request",
         "dojo/text!./templates/EditColumn.html",
+        "dijit/form/Button",
         "dojo/on"
     ],
-    function(declare, _FormWidget, _WidgetsInTemplateMixin, Request, template, on) {
+    function(declare, _FormWidget, _WidgetsInTemplateMixin, Request, template, Button, on) {
         
         /**
          * 
@@ -33,18 +34,18 @@ define([
                 this.column.editOn = (item.bool) ? false : "dblclick";
             }
 
+            if (this.value instanceof Date) {
+                this.value = item[this.fieldName] = dojo.date.locale.format(
+                    this.value, {
+                        selector: 'date', 
+                        datePattern: "yyyy-MM-dd"
+                    }
+                );
+            }
+
             if (!item.bool && dojo.isFunction(this.column.formatter)) {
 
-                this.displayValue = this.column.formatter(this.value);
-
-                if (this.value instanceof Date) {
-                    item[this.fieldName] = dojo.date.locale.format(
-                        this.value, {
-                            selector: 'date', 
-                            datePattern: "yyyy-MM-dd"
-                        }
-                    );
-                }
+                this.displayValue = this.column.formatter(this.value);                
             } else {
                 this.displayValue = this.value;
             }
@@ -61,6 +62,8 @@ define([
             
             item: false,
             
+            value: false,
+            
 //            tabIndex: "",
             
             _setTabIndexAttr: "editButton",
@@ -72,12 +75,13 @@ define([
             widgetsInTemplate: true,
             
             _bindToggling: function() {
-                var editButton = this.editButton
+                var self = this
+                    , editButton = this.editButton
                     , cancelButton = this.cancelButton
                     , item = this.item
                     , cell = this.cell
                     , _updateCells = this._updateCells
-                    , self = this;
+                    , _updateButtons = this._updateButtons;
                 
                 editButton.on('click', function(e) {
                     
@@ -88,15 +92,8 @@ define([
                     item.bool = !item.bool;
 
                     dojo.when(_updateCells(item, dojo.query('.dgrid-cell', cell.row.element)))
-                        .then(function(status) {
-//                            dojo.style(editButton.domNode, 'display', '');
-
-                            if (self.item.bool) {
-                                dojo.style(cancelButton.domNode, 'display', '');
-                            } else {
-                                dojo.style(cancelButton.domNode, 'display', 'none');
-                            }
-                            
+                        .then(function() {
+                            self._updateButtons(item.bool);
                             
                             editButton.set('disabled', false);
                         });
@@ -106,9 +103,11 @@ define([
                     e.preventDefault();
                     
                     item.bool = false;
-
+                    
                     dojo.when(_updateCells(item, dojo.query('.dgrid-cell', cell.row.element), true))
-                        .then(function(status) {
+                        .then(function() {
+                            self._updateButtons(item.bool);
+                            
                             dojo.style(cancelButton.domNode, 'display', 'none');
                             dojo.style(editButton.domNode, 'display', '');
                         });
@@ -170,6 +169,16 @@ define([
 
                 return dfrd.promise;
             },
+            
+            _updateButtons: function(editModeEnabled) {
+                this.editButton.set('label', (editModeEnabled ? 'Save': 'Edit'));
+                
+                if (editModeEnabled) {
+                    dojo.style(this.cancelButton.domNode, 'display', '');
+                } else {
+                    dojo.style(this.cancelButton.domNode, 'display', 'none');
+                }
+            },
 
             focus: function(){
                 // summary:
@@ -187,6 +196,8 @@ define([
                 this.cell = this.grid.cell(cells[0]);
                 
                 this.item = this.cell.row.data;
+               
+                this.item.bool = false;
                
                 this.focusNode = this.editButton;
                

@@ -16,7 +16,7 @@ class Application_Model_Transaction extends Application_Model_Abstract
             $row->date = $data['date'];
             $row->value = $data['amount'];
             $row->created = date('Y-m-d H:i:s');
-            $row->comment = '';
+            $row->comment = $data['comment'];
             
             $row->save();
             

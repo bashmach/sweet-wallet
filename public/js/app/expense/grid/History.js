@@ -1,6 +1,5 @@
 define(
     [
-        "require",
         "dojo/_base/declare",
         "dgrid/OnDemandGrid",
         "dgrid/Editor", 
@@ -16,13 +15,14 @@ define(
         "dojo/store/Observable",
         "dojo/store/Memory",
         "dojo/on",
-        "dgrid/test/data/base",
-        "dojo/NodeList-traverse",
         "dojo/domReady!"
     ],
-    function(require, declare, Grid, Editor, FilteringSelect, DateTextBox, Textarea, CurrencySpinner, EditColumn, Selection, Keyboard, JsonRest, Observable, Memory, on) {
+    function(declare, Grid, Editor, FilteringSelect, DateTextBox, Textarea, CurrencySpinner, EditColumn, Selection, Keyboard, JsonRest, Observable, Memory, on) {
         
         grid = false;
+
+        var _lastDisplayedDate = false;
+        var _lastDisplayedItemId = false;
 
         var _refresh = function() {
             var attribute = 'date'
@@ -46,14 +46,51 @@ define(
                 return [
                     Editor(
                         {
+                            label: 'Date'
+                            , field: 'date'
+                            , canEdit: function(item) {
+                                return value.bool == true;
+                            }
+//                            , autoSave : true
+                            , renderCell: function(object, data, td, options) {
+                                td.innerHTML = dojo.date.locale.format(new Date(data), {selector: 'date', formatLength: "long"});
+                                
+//                                var _showDate;
+//                                    
+//                                if (typeof object._showDate == 'undefined') {
+//                                    _showDate = (_lastDisplayedDate !== data || _lastDisplayedItemId == object.id);
+//                                } else {
+//                                    _showDate = object._showDate;
+//                                }
+//                                
+//                                if (_showDate) {
+//                                    object._showDate = true;
+//                                    
+//                                    td.innerHTML = dojo.date.locale.format(new Date(data), {selector: 'date', formatLength: "long"});
+//                                } else {
+//                                    object._showDate = false;
+//                                }
+//                                
+//                                _lastDisplayedDate = data;
+//                                _lastDisplayedItemId = object.id;
+                            }
+                        }, 
+                        DateTextBox
+                        , "dblclick"
+                    ),
+                    Editor(
+                        {
                             label: 'Category'
-                            , field: 'categoryId' 
+                            , field: 'categoryId'
+                            , canEdit: function(item) {
+                                return value.bool == true;
+                            }
 //                            , autoSave : true
                             , widgetArgs: {
                                 store: categoriesStore
                             }
-                            , formatter: function(value) {
-                                return categoriesStore.get(value).name;
+                            , renderCell: function(object, data, td, options) {
+                                td.innerHTML = categoriesStore.get(data).name;
                             }
                         }
                         , FilteringSelect
@@ -72,6 +109,9 @@ define(
                                     }
                                 }, options.spinner);
                             }
+                            , canEdit: function(item) {
+                                return value.bool == true;
+                            }
                             , formatter: function(value) {
                                  return dojo.currency.format(value, {currency: options.currency});
                             }
@@ -81,19 +121,11 @@ define(
                     ),
                     Editor(
                         {
-                            label: 'Date'
-                            , field: 'date'
-//                            , autoSave : true
-                            , formatter: function(value) {
-                                return dojo.date.locale.format(new Date(value), {selector: 'date', formatLength: "long"});
-                            }
-                        }, 
-                        DateTextBox
-                    ),
-                    Editor(
-                        {
                             label: 'Comment'
                             , field: 'comment'
+                            , canEdit: function(item) {
+                                return value.bool == true;
+                            }
                             , renderCell: function(object, data, td, options){
                                 var div = document.createElement("div");
                                 div.className = "dojoxEllipsis";
@@ -109,12 +141,15 @@ define(
                         }, 
                         Textarea
                         , "dblclick"
-                    ),
-                    Editor(
+                    ) 
+                    , Editor(
                         {
                             label: ' '
                             , field: 'id'
                             , sortable : false
+                            , widgetArgs: {
+                                name: '123'
+                            }
                         }
                         , EditColumn
                     )
@@ -148,12 +183,14 @@ define(
                         selectionMode: "single"
                     }, "grid");
                 
+                    grid.lastDisplayedDate = false;
+                
                     dojo.subscribe('/expense/add', this, function(row) {
                         store.put(row);
                     });
                     
                     dojo.subscribe('/expense/edit', this, function(row) {
-                        _refresh();
+                        grid.store.get(row.id).date = '2011-11-20';
                     });
                 });
             },
