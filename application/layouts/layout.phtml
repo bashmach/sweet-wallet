@@ -42,16 +42,26 @@
     
     <section id="container">
         <header data-dojo-type="dijit.layout.ContentPane">
-            <div id="logo">
-                <a href="/">Sweet Wallet</a>
+            <div class="wrapper">
+                <div id="logo">
+                    <a href="/">Sweet Wallet</a>
+                </div>
+                <?php if ($this->currentUser()) { ?>
+                <div class="links">
+                    <ul>
+                        <li>
+                            <span>Welcome!</span>
+                        </li>
+                        <li>
+                            <a href="/logout">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+                <?php } ?>
             </div>
         </header>
         
-            <?php echo $this->layout()->content ?>
-        
-        <footer data-dojo-type="dijit.layout.ContentPane">
-            
-        </footer>
+        <?php echo $this->layout()->content ?>
     </section> <!--! end of #container -->
         
         

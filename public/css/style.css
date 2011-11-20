@@ -345,12 +345,71 @@ body.claro header.dijitContentPane {
     padding: 0;
 }
 
+header .wrapper {
+    margin: 0 auto;
+    width: 1080px;
+    position: relative;
+}
+
+header .links {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    background-position: top right;
+    padding-right: 25px;
+    color: white;
+}
+
+header .links,
+header .links ul,
+header .links ul li {
+    height: 27px;
+    background-image: url(images/nav-sub.png);
+    background-repeat: no-repeat;
+}
+
+header .links ul {
+    float: right;
+    display: block;
+    zoom: 1;
+    margin: 0;
+    padding-left: 25px;
+    background-position: 0 -50px;
+    line-height: 27px;
+}
+
+header .links ul li {
+    float: right;
+    display: -moz-inline-stack;
+    display: inline-block;
+    overflow: hidden;
+    float: left;
+    background-color: #dcdcdc;
+    background-position: 0 -100px;
+    padding: 0 10px 0 12px;
+}
+
+header .links ul li:first-child {
+    background-image: none;
+    padding: 0 8px 0 10px;
+}
+
+header .links ul li span,
+header .links ul li a {
+    display: inline-block;
+    height: 15px;
+    line-height: 15px;
+    padding: 6px;
+    font-size: 11px;
+    color: #02365c;
+    text-decoration: none;
+    font-weight: normal;
+}
+
 #logo {
     font-size: 2em;
     line-height: 1.5em;
     font-family: 'Marck Script', cursive;
-    margin: 0 auto;
-    width: 1080px;
 }
 
 #logo a {
