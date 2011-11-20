@@ -2,6 +2,10 @@
 
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
+    protected function _initConfig()
+    {
+        Zend_Registry::set('Config', $this->getOptions());
+    }
 
     protected function _initView() 
     {
