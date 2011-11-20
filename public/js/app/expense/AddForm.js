@@ -27,8 +27,6 @@ define([
 
             submitButton: false,
 
-            options: options.spinner,
-
             startup: function() {
                 var _dateBox = this.dateBox;
                 
@@ -47,7 +45,7 @@ define([
             },
 
             postCreate: function() {
-                this.options = options.spinner;
+                this.category.store = this.categoriesStore;
                 
                 on(this.form, 'submit', dojo.hitch(this, '_submit'));
 

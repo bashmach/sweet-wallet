@@ -7,7 +7,6 @@ define(
         "dijit/form/DateTextBox",
         "dijit/form/Textarea",
         "app/form/CurrencySpinner/CurrencySpinner", 
-//        "dijit/form/Button",
         "app/expense/grid/EditColumn",
         "dgrid/Selection", 
         "dgrid/Keyboard", 
@@ -20,9 +19,6 @@ define(
     function(declare, Grid, Editor, FilteringSelect, DateTextBox, Textarea, CurrencySpinner, EditColumn, Selection, Keyboard, JsonRest, Observable, Memory, on) {
         
         grid = false;
-
-        var _lastDisplayedDate = false;
-        var _lastDisplayedItemId = false;
 
         var _refresh = function() {
             var attribute = 'date'
@@ -85,12 +81,18 @@ define(
                             , canEdit: function(item) {
                                 return value.bool == true;
                             }
-//                            , autoSave : true
-                            , widgetArgs: {
-                                store: categoriesStore
+                            , autoSave : true
+                            , widgetArgs: function() {
+                                if (application instanceof app.App) {
+                                    return {
+                                        store: application.categoriesStore
+                                    }
+                                } else {
+                                    return {};
+                                }
                             }
                             , renderCell: function(object, data, td, options) {
-                                td.innerHTML = categoriesStore.get(data).name;
+                                td.innerHTML = application.categoriesStore.get(data).name;
                             }
                         }
                         , FilteringSelect
@@ -102,18 +104,13 @@ define(
                             , field: 'amount'
 //                            , autoSave : true
                             , widgetArgs: function() {
-                                return dojo.mixin({
-                                    currency: options.currency,
-                                    constraints: {
-                                        fractional:true
-                                    }
-                                }, options.spinner);
+                                return application.options.spinner;
                             }
                             , canEdit: function(item) {
                                 return value.bool == true;
                             }
                             , formatter: function(value) {
-                                 return dojo.currency.format(value, {currency: options.currency});
+                                 return dojo.currency.format(value, {currency: application.options.currency});
                             }
                         }
                         , CurrencySpinner
@@ -196,9 +193,15 @@ define(
             },
             
             startup: function() {
-                this.store = Observable(new Memory());
+                try {
+                    
+                    this.store = Observable(new Memory());
 
-                this.init();
+                    this.init();
+                } catch (e) {
+                    log(e);
+                }
+                    
             }
         });
     }
