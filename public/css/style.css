@@ -39,12 +39,16 @@ header {
     height: 3em;
     width: 100%;
 }
+header #logo,
+header .links {
+    z-index: 999;
+}
 
 body.claro header.dijitContentPane {
     padding: 0;
 }
 
-header .wrapper {
+body .wrapper {
     margin: 0 auto;
     width: 1080px;
     position: relative;
@@ -109,6 +113,8 @@ header .links ul li a {
     font-size: 2em;
     line-height: 1.5em;
     font-family: 'Marck Script', cursive;
+    width: 140px;
+    position: relative;
 }
 
 #logo a {
@@ -131,8 +137,6 @@ header .links ul li a {
 
 #mainWrapper {
     position: absolute;
-    width: 1080px;
-    margin: 0 auto;
     height: 100%;
     top: 0px;
     bottom:0;
