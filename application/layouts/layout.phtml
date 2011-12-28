@@ -37,16 +37,16 @@
 <body class="claro">
 
     <section id="loader">
-        <div id="loaderInner">Loading ...</div>
+        <div id="loaderInner">&nbsp;</div>
     </section>
     
     <section id="container">
+        <?php if ($this->currentUser()) { ?>
         <header data-dojo-type="dijit.layout.ContentPane">
             <div class="wrapper">
                 <div id="logo">
                     <a href="/">Sweet Wallet</a>
                 </div>
-                <?php if ($this->currentUser()) { ?>
                 <div class="links">
                     <ul>
                         <li>
@@ -57,9 +57,9 @@
                         </li>
                     </ul>
                 </div>
-                <?php } ?>
             </div>
         </header>
+        <?php } ?>
         
         <?php echo $this->layout()->content ?>
     </section> <!--! end of #container -->
