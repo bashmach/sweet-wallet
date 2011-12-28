@@ -1,16 +1,18 @@
-<section id="main" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="liveSplitters: 'false'">
-    <section id="accordion" data-dojo-type="dijit.layout.AccordionContainer" data-dojo-props="region: 'leading'">
-            <div data-dojo-type="app.expense.AddForm" data-dojo-props="region: 'center', title: 'New expense'"></div>
-            <div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: 'Settings'">
-                <h1>Settings</h1>
-            </div>
-        </section>
+<div id="mainWrapper">
+    <section id="accordion" data-dojo-type="dijit.layout.AccordionContainer" data-dojo-props="design: 'sidebar', region: 'left'">
+        <div data-dojo-type="app.expense.AddForm" data-dojo-props="title: 'New expense'"></div>
+        <div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title: 'Settings'">
+            <h1>Settings</h1>
+        </div>
+    </section>
 
-    
-    <div data-dojo-type="dijit.layout.TabContainer" id="topTabs" data-dojo-props="region: 'center', tabStrip: 'true'">
-        <div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="refreshOnShow: 'true', href: '/history', title: 'Latest expenses'" class="tab"></div>
+    <section id="main" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region: 'leading', liveSplitters: 'false'">
+        <div data-dojo-type="dijit.layout.TabContainer" id="topTabs" data-dojo-props="region: 'center', tabStrip: 'true'">
+            <div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="refreshOnShow: 'true', href: '/dashboard', title: 'Dashboard'" class="tab"></div>
 
-        <div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="refreshOnShow: 'true', href: '/statistics', title: 'Statistics'" class="tab"></div>
-    </div>
-    
-</section>
+            <div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="refreshOnShow: 'true', href: '/history', title: 'Latest expenses'" class="tab"></div>
+
+            <div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="refreshOnShow: 'true', href: '/statistics', title: 'Statistics'" class="tab"></div>
+        </div>
+    </section>
+</div>
