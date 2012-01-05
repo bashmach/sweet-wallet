@@ -45,7 +45,9 @@ define([
             },
 
             postCreate: function() {
-                this.category.store = this.categoriesStore;
+                console.log('d', this.categoriesStore);
+                
+                this.category.store = application.categoriesStore;
                 
                 on(this.form, 'submit', dojo.hitch(this, '_submit'));
 
